@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>End of Year Gathering SJWTSS 2026</title>
+  <meta name="description" content="Hitung mundur menuju End of Year Gathering SJWTSS, 17 Desember 2026 di Sapa Cafe. Usul ide acara atau daftar jadi pengisi acara.">
+  <meta name="theme-color" content="#7a0a14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#top" class="brand">SJWTSS <span>2026</span></a>
+    <nav>
+      <a href="#galeri">Galeri</a>
+      <a href="#ikut-serta">Ikut Serta</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">SJWTSS · <span data-bind="venue"></span></p>
+        <h1>End of Year Gathering<br>Segera Dimulai</h1>
+        <p class="sub">
+          <span data-bind="dateLabel"></span> · <span data-bind="timeLabel"></span><br>
+          Ayo bikin gathering tahun ini lebih seru dari tahun lalu.
+        </p>
+
+        <div class="countdown" id="countdown" role="timer" aria-live="off">
+          <div><b id="cd-d">--</b><small>Hari</small></div>
+          <div><b id="cd-h">--</b><small>Jam</small></div>
+          <div><b id="cd-m">--</b><small>Menit</small></div>
+          <div><b id="cd-s">--</b><small>Detik</small></div>
+        </div>
+        <p class="live-msg" id="live-msg" hidden></p>
+
+        <a class="btn" href="#ikut-serta">Usul Acara / Jadi Pengisi</a>
+      </div>
+    </section>
+
+    <section id="galeri" class="section">
+      <h2>Kenangan Gathering</h2>
+      <p class="lead">Foto-foto dari gathering tahun-tahun sebelumnya.</p>
+      <div class="tabs" id="year-tabs" role="tablist"></div>
+      <div class="grid" id="gallery"></div>
+    </section>
+
+    <section id="ikut-serta" class="section alt">
+      <h2>Ikut Serta</h2>
+      <p class="lead">Punya ide acara? Atau mau tampil? Isi salah satu form di bawah.</p>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-form="ide" role="tab">💡 Usul Acara</button>
+        <button class="tab" data-form="tampil" role="tab">🎤 Jadi Pengisi Acara</button>
+      </div>
+
+      <form id="form-ide" class="card" data-type="ide">
+        <label>Nama <span class="opt">(boleh dikosongkan)</span>
+          <input name="nama" autocomplete="name" maxlength="80">
+        </label>
+        <label>Kategori
+          <select name="kategori" required>
+            <option value="">Pilih…</option>
+            <option>Games / Permainan</option>
+            <option>Makanan &amp; Minuman</option>
+            <option>Hiburan / Pertunjukan</option>
+            <option>Dekorasi &amp; Tema</option>
+            <option>Hadiah / Doorprize</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+        <label>Apa yang perlu ada di acara?
+          <textarea name="ide" rows="4" required maxlength="1000" placeholder="Contoh: doorprize untuk semua yang hadir, lomba karaoke…"></textarea>
+        </label>
+        <button class="btn" type="submit">Kirim Usulan</button>
+        <p class="status" role="status"></p>
+      </form>
+
+      <form id="form-tampil" class="card" data-type="tampil" hidden>
+        <label>Nama <input name="nama" required autocomplete="name" maxlength="80"></label>
+        <label>Kontak (WhatsApp)
+          <input name="kontak" required inputmode="tel" autocomplete="tel" maxlength="30" placeholder="08xxxxxxxxxx">
+        </label>
+        <label>Jenis penampilan
+          <select name="jenis" required>
+            <option value="">Pilih…</option>
+            <option>Nyanyi / Musik</option>
+            <option>Dance</option>
+            <option>Stand-up / Komedi</option>
+            <option>Drama / Sketsa</option>
+            <option>MC / Pemandu acara</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+        <label>Perkiraan durasi (menit)
+          <input name="durasi" type="number" min="1" max="60" inputmode="numeric">
+        </label>
+        <label>Ceritakan rencana penampilanmu
+          <textarea name="deskripsi" rows="4" maxlength="1000" placeholder="Judul lagu, kebutuhan alat/sound, jumlah orang…"></textarea>
+        </label>
+        <button class="btn" type="submit">Daftar Jadi Pengisi</button>
+        <p class="status" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p><span data-bind="eventName"></span> · <span data-bind="dateLabel"></span> · <span data-bind="venue"></span></p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" aria-label="Tutup">×</button>
+    <img alt="">
+  </div>
+
+  <script src="data/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
