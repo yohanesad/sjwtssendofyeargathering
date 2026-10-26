@@ -7,24 +7,24 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6}
 h1,h2,.brand,.countdown b{font-family:"Exo 2",Inter,sans-serif}
 
-.topbar{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:linear-gradient(#12060ae6,#12060a00)}
+.topbar{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:rgba(18,6,10,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.1)}
 .brand{font-weight:800;letter-spacing:.08em;color:#fff;text-decoration:none}
 .brand span{color:var(--red)}
 .topbar nav a{color:var(--muted);text-decoration:none;margin-left:20px;font-weight:500}
 .topbar nav a:hover{color:#fff}
 
-.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:110px 20px 70px;
+.hero{min-height:max(100svh,760px);display:grid;place-items:start center;text-align:center;padding:96px 20px 60px;
   background:
-    linear-gradient(rgba(60,4,12,.55),rgba(18,6,10,.92)),
-    url("../assets/hero.jpg") center/cover,
+    linear-gradient(rgba(70,4,14,.28) 0%,rgba(30,4,10,.38) 55%,rgba(18,6,10,.96) 100%),
+    url("../assets/hero.jpg") center bottom/cover no-repeat,
     url("../assets/hero-placeholder.svg") center/cover,
     var(--red-dark)}
-.hero-inner{max-width:860px}
+.hero-inner{max-width:900px;padding:clamp(20px,3.5vw,34px) clamp(18px,4vw,44px);border-radius:20px;border:1px solid rgba(255,255,255,.22);background:rgba(40,4,10,.32);-webkit-backdrop-filter:blur(6px) saturate(1.2);backdrop-filter:blur(6px) saturate(1.2);box-shadow:0 20px 60px rgba(0,0,0,.45)}
 .eyebrow{margin:0 0 14px;color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-size:.8rem}
-h1{margin:0 0 16px;font-size:clamp(2.1rem,6.5vw,4.4rem);line-height:1.08;font-weight:800;text-transform:uppercase}
-.sub{color:var(--muted);margin:0 auto 34px;max-width:520px}
+h1{margin:0 0 16px;font-size:clamp(1.8rem,5vw,3.3rem);line-height:1.08;font-weight:800;text-transform:uppercase}
+.sub{color:#fde4e7;margin:0 auto 24px;max-width:520px}
 
-.countdown{display:flex;justify-content:center;gap:0;margin:0 auto 34px}
+.countdown{display:flex;justify-content:center;gap:0;margin:0 auto 24px}
 .countdown div{padding:0 clamp(14px,4vw,34px);text-align:center}
 .countdown div+div{border-left:1px solid rgba(255,255,255,.35)}
 .countdown b{display:block;font-size:clamp(2rem,7vw,3.6rem);font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
@@ -36,7 +36,7 @@ h1{margin:0 0 16px;font-size:clamp(2.1rem,6.5vw,4.4rem);line-height:1.08;font-we
 .btn:disabled{opacity:.6;cursor:wait}
 
 .section{max-width:1100px;margin:0 auto;padding:80px 20px}
-.section.alt{max-width:none;background:linear-gradient(var(--red-deep),var(--bg))}
+.section.alt{max-width:none;background:linear-gradient(rgba(42,5,9,.9),rgba(18,6,10,.97)),url("../assets/hero.jpg") center/cover fixed}
 .section.alt>*{max-width:620px;margin-left:auto;margin-right:auto}
 h2{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 6px}
 .lead{color:var(--muted);margin:0 0 26px}
@@ -51,10 +51,10 @@ h2{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 6px}
 .grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .grid button:hover img{transform:scale(1.05)}
 
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;display:grid;gap:16px}
+.card{background:rgba(29,10,15,.62);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:24px;display:grid;gap:16px}
 label{display:grid;gap:6px;font-weight:600;font-size:.92rem}
 .opt{font-weight:400;color:var(--muted)}
-input,select,textarea{width:100%;background:#12060a;color:#fff;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:inherit}
+input,select,textarea{width:100%;background:rgba(18,6,10,.7);color:#fff;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font:inherit}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--red);border-color:transparent}
 .status{margin:0;min-height:1.4em;font-size:.92rem;color:var(--muted)}
 .status.ok{color:#7ee2a0}.status.err{color:#ff8a8a}
