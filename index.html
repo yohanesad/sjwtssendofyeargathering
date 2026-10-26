@@ -38,13 +38,17 @@
         </div>
         <p class="live-msg" id="live-msg" hidden></p>
 
-        <a class="btn" href="#ikut-serta">Usul Acara / Jadi Pengisi</a>
+        <div class="cta-row">
+          <a class="btn" href="#ikut-serta" data-open="ide">Usul Acara</a>
+          <a class="btn ghost" href="#ikut-serta" data-open="tampil">Jadi Pengisi Acara</a>
+        </div>
       </div>
     </section>
 
     <section id="galeri" class="section">
       <h2>Kenangan Gathering</h2>
       <p class="lead">Foto-foto dari gathering tahun-tahun sebelumnya.</p>
+      <p class="lead" id="gallery-note" hidden>Contoh tampilan. Foto asli akan muncul setelah diunggah.</p>
       <div class="tabs" id="year-tabs" role="tablist"></div>
       <div class="grid" id="gallery"></div>
     </section>
@@ -53,9 +57,15 @@
       <h2>Ikut Serta</h2>
       <p class="lead">Punya ide acara? Atau mau tampil? Isi salah satu form di bawah.</p>
 
-      <div class="tabs" role="tablist">
-        <button class="tab active" data-form="ide" role="tab">💡 Usul Acara</button>
-        <button class="tab" data-form="tampil" role="tab">🎤 Jadi Pengisi Acara</button>
+      <div class="choices" role="tablist" aria-label="Pilih jenis isian">
+        <button type="button" class="choice active" data-form="ide" role="tab" aria-selected="true">
+          <strong>Usul Acara</strong>
+          <span>Kasih ide: games, makanan, hadiah, dekorasi, dll.</span>
+        </button>
+        <button type="button" class="choice" data-form="tampil" role="tab" aria-selected="false">
+          <strong>Jadi Pengisi Acara</strong>
+          <span>Daftar untuk tampil: nyanyi, dance, komedi, MC, dll.</span>
+        </button>
       </div>
 
       <form id="form-ide" class="card" data-type="ide">

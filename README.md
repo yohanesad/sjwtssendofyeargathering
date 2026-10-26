@@ -4,8 +4,12 @@ Situs statis (HTML/CSS/JS, tanpa build) dengan countdown menuju 17 Desember 2026
 
 Coba lokal: `python3 -m http.server` lalu buka http://localhost:8000. Bisa di-deploy ke Vercel, Netlify, atau GitHub Pages apa adanya.
 
-## Yang perlu kamu isi
-1. **Jam acara** — `eventStart` di `data/config.js` (sementara 16:30 WIB).
-2. **Foto hero** — simpan foto besar gathering tahun lalu sebagai `assets/hero.jpg`.
-3. **Galeri** — taruh foto di `assets/photos/<tahun>/`, daftarkan nama file di `gallery` pada `data/config.js`. Tambah tahun baru dengan menambah key baru.
-4. **Form** — sambungkan ke Google Sheet: ikuti komentar di `apps-script/Code.gs`, lalu isi `formEndpoint`. Selama kosong, data hanya tersimpan di browser pengunjung dan tidak sampai ke panitia.
+## Menambah foto galeri
+Taruh foto di `assets/photos/<tahun>/` (misalnya `assets/photos/2025/`). Netlify membuat daftar galeri otomatis saat deploy (`scripts/build-gallery.js`), jadi tidak ada file lain yang perlu diedit. Format: jpg, jpeg, png, webp, avif. Tahun baru = folder baru bernama empat digit.
+
+Lewat web GitHub: buka folder `assets/photos`, klik **Add file → Upload files**, seret foto, lalu **Commit changes** ke branch produksi. Untuk tahun baru, pilih **Create new file** dan ketik `2022/.gitkeep` sebagai nama, lalu unggah fotonya ke folder itu.
+
+## Pengaturan lain
+- **Jam acara** — `eventStart` dan `timeLabel` di `data/config.js`.
+- **Foto hero** — ganti `assets/hero.jpg`.
+- **Form** — `formEndpoint` di `data/config.js` berisi URL Google Apps Script (`apps-script/Code.gs`).

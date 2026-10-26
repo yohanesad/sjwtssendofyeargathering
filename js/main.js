@@ -26,33 +26,56 @@
   tick();
 
   // ---- Galeri ----
-  const PLACEHOLDER = "assets/hero-placeholder.svg";
-  const years = Object.keys(cfg.gallery).sort((a, b) => b - a);
+  // Daftar foto dibuat otomatis dari folder assets/photos/<tahun>/ (scripts/build-gallery.js).
+  const PLACEHOLDERS = ["1.svg", "2.svg", "3.svg", "4.svg", "5.svg", "6.svg"].map(f => `assets/placeholder/${f}`);
   const tabs = $("#year-tabs"), grid = $("#gallery");
+  let gallery = {};
+
+  // Di Netlify, thumbnail dikecilkan lewat Netlify Image CDN; jika tidak tersedia, pakai file asli.
+  const thumb = src => `/.netlify/images?url=${encodeURIComponent("/" + src)}&w=720`;
+
+  function photoButton(src, alt, small) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", "Perbesar foto: " + alt);
+    const img = new Image();
+    img.loading = "lazy";
+    img.alt = alt;
+    let triedOriginal = !small;
+    img.onerror = () => {
+      if (!triedOriginal) { triedOriginal = true; img.src = src; }
+    };
+    img.src = small ? thumb(src) : src;
+    b.append(img);
+    b.onclick = () => openLightbox(src, alt);
+    return b;
+  }
+
   function showYear(y) {
     tabs.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.year === y));
-    grid.replaceChildren(...cfg.gallery[y].map(f => {
-      const src = `assets/photos/${y}/${f}`;
-      const b = document.createElement("button");
-      b.type = "button";
-      b.setAttribute("aria-label", `Perbesar foto gathering ${y}`);
-      const img = new Image();
-      img.loading = "lazy";
-      img.alt = `Gathering ${y}`;
-      img.src = src;
-      img.onerror = () => { img.onerror = null; img.src = PLACEHOLDER; };
-      b.append(img);
-      b.onclick = () => openLightbox(img.src, img.alt);
-      return b;
-    }));
+    grid.replaceChildren(...gallery[y].map(f => photoButton(`assets/photos/${y}/${f}`, `Gathering ${y}`, true)));
   }
-  years.forEach(y => {
-    const t = document.createElement("button");
-    t.className = "tab"; t.dataset.year = y; t.textContent = y; t.setAttribute("role", "tab");
-    t.onclick = () => showYear(y);
-    tabs.append(t);
-  });
-  if (years.length) showYear(years[0]);
+
+  function renderGallery() {
+    const years = Object.keys(gallery).sort((a, b) => b - a);
+    if (!years.length) {
+      $("#gallery-note").hidden = false;
+      grid.replaceChildren(...PLACEHOLDERS.map(src => photoButton(src, "Contoh foto", false)));
+      return;
+    }
+    years.forEach(y => {
+      const t = document.createElement("button");
+      t.className = "tab"; t.dataset.year = y; t.textContent = y; t.setAttribute("role", "tab");
+      t.onclick = () => showYear(y);
+      tabs.append(t);
+    });
+    showYear(years[0]);
+  }
+
+  fetch("data/gallery.json")
+    .then(r => (r.ok ? r.json() : {}))
+    .catch(() => ({}))
+    .then(data => { gallery = data || {}; renderGallery(); });
 
   const lb = $("#lightbox");
   function openLightbox(src, alt) { $("img", lb).src = src; $("img", lb).alt = alt; lb.hidden = false; }
@@ -60,13 +83,17 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 
   // ---- Form ----
-  document.querySelectorAll(".tab[data-form]").forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll(".tab[data-form]").forEach(t => t.classList.toggle("active", t === tab));
-      $("#form-ide").hidden = tab.dataset.form !== "ide";
-      $("#form-tampil").hidden = tab.dataset.form !== "tampil";
-    };
-  });
+  function selectForm(name) {
+    document.querySelectorAll(".choice").forEach(c => {
+      const on = c.dataset.form === name;
+      c.classList.toggle("active", on);
+      c.setAttribute("aria-selected", on);
+    });
+    $("#form-ide").hidden = name !== "ide";
+    $("#form-tampil").hidden = name !== "tampil";
+  }
+  document.querySelectorAll(".choice").forEach(c => { c.onclick = () => selectForm(c.dataset.form); });
+  document.querySelectorAll("[data-open]").forEach(a => { a.addEventListener("click", () => selectForm(a.dataset.open)); });
 
   document.querySelectorAll("form.card").forEach(form => {
     form.addEventListener("submit", async e => {
