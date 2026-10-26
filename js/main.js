@@ -72,7 +72,7 @@
     showYear(years[0]);
   }
 
-  fetch("data/gallery.json")
+  fetch("data/gallery.json", { cache: "no-store" })
     .then(r => (r.ok ? r.json() : {}))
     .catch(() => ({}))
     .then(data => { gallery = data || {}; renderGallery(); });
