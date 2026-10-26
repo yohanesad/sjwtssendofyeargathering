@@ -79,8 +79,9 @@
       status.className = "status"; status.textContent = "Mengirim…";
       try {
         if (cfg.formEndpoint) {
-          // no-cors: respons tidak bisa dibaca, jadi sukses = request terkirim tanpa error jaringan.
-          await fetch(cfg.formEndpoint, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+          const res = await fetch(cfg.formEndpoint, { method: "POST", body: new URLSearchParams(data) });
+          const out = await res.json();
+          if (!out.ok) throw new Error(out.error || "server menolak");
           status.textContent = "Terima kasih! Masukanmu sudah terkirim.";
         } else {
           const key = "sjwtss-demo-submissions";
@@ -92,7 +93,8 @@
         form.reset();
       } catch (err) {
         status.classList.add("err");
-        status.textContent = "Gagal mengirim. Coba lagi sebentar.";
+        console.error(err);
+        status.textContent = "Gagal mengirim, data belum tersimpan. Coba lagi sebentar.";
       } finally {
         btn.disabled = false;
       }
