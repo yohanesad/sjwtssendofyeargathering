@@ -9,7 +9,7 @@ window.SITE_CONFIG = {
 
   // URL Google Apps Script Web App (lihat README.md & apps-script/Code.gs).
   // Kosong = form hanya menyimpan di browser pengunjung (mode demo).
-  formEndpoint: "https://script.google.com/macros/s/AKfycbx0wmMls9cdidIOoCf_7DegWaJOjV8YM17AYwixX61FSJPS4Xmsn4xrY_vEjI6wNs18jg/exec",
+  formEndpoint: "https://script.google.com/macros/s/AKfycbwgk2wx2EtJs9iwr3A0sbe360pUwa4ECifEmI0WQaC1M065IoMN8y2CpPEK3RL79mmvjg/exec",
 
   // Galeri per tahun. Taruh file di assets/photos/<tahun>/ lalu daftarkan di sini.
   // Jika file gagal dimuat, kartu foto otomatis jatuh ke gambar placeholder.
