@@ -83,18 +83,6 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
 
   // ---- Form ----
-  function selectForm(name) {
-    document.querySelectorAll(".choice").forEach(c => {
-      const on = c.dataset.form === name;
-      c.classList.toggle("active", on);
-      c.setAttribute("aria-selected", on);
-    });
-    $("#form-ide").hidden = name !== "ide";
-    $("#form-tampil").hidden = name !== "tampil";
-  }
-  document.querySelectorAll(".choice").forEach(c => { c.onclick = () => selectForm(c.dataset.form); });
-  document.querySelectorAll("[data-open]").forEach(a => { a.addEventListener("click", () => selectForm(a.dataset.open)); });
-
   document.querySelectorAll("form.card").forEach(form => {
     form.addEventListener("submit", async e => {
       e.preventDefault();

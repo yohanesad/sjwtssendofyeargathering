@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Undangan End of Year Gathering SJWTSS 2026</title>
   <meta name="description" content="Kamu diundang! End of Year Gathering SJWTSS, Kamis 17 Desember 2026 di Sapa Cafe. Konfirmasi kehadiranmu sekarang.">
   <meta name="theme-color" content="#7a0a14">
@@ -22,7 +22,7 @@
     <nav>
       <a href="#detail">Detail</a>
       <a href="#konfirmasi">Konfirmasi</a>
-      <a href="#galeri">Galeri</a>
+      <a href="#isi-acara">Isi Acara</a>
     </nav>
   </header>
 
@@ -47,6 +47,7 @@
 
         <div class="cta-row">
           <a class="btn" href="#konfirmasi">Konfirmasi Kehadiran</a>
+          <a class="btn ghost" href="#isi-acara">Isi Acara</a>
           <a class="btn ghost" href="#detail">Detail &amp; Lokasi</a>
         </div>
         <p class="rsvp-count" id="rsvp-count" hidden></p>
@@ -87,17 +88,17 @@
 
     <section id="konfirmasi" class="section alt">
       <h2>Konfirmasi Kehadiran</h2>
-      <p class="lead">Isi data di bawah supaya panitia bisa menyiapkan tempat dan konsumsi. Kalau rencanamu berubah, isi lagi dengan NIK yang sama dan jawaban terakhirmu yang dipakai.</p>
+      <p class="lead">Isi data di bawah supaya panitia bisa menyiapkan tempat dan konsumsi. Punya usul acara? Tulis di kolom paling bawah. Kalau rencanamu berubah, isi lagi dengan NIK yang sama dan jawaban terakhirmu yang dipakai.</p>
 
       <form id="form-rsvp" class="card" data-type="rsvp" data-success="Terima kasih! Konfirmasi kehadiranmu sudah tercatat.">
         <label for="r-nama">Nama Lengkap
           <input id="r-nama" name="nama" required autocomplete="name" maxlength="80">
         </label>
         <label for="r-nik">Nomor Induk Karyawan
-          <input id="r-nik" name="nik" required inputmode="text" autocomplete="off" maxlength="30">
+          <input id="r-nik" name="nik" required inputmode="text" autocomplete="off" autocapitalize="characters" maxlength="30">
         </label>
         <label for="r-dept">Departemen
-          <input id="r-dept" name="departemen" required maxlength="80">
+          <input id="r-dept" name="departemen" required autocomplete="organization-title" maxlength="80">
         </label>
 
         <fieldset>
@@ -117,8 +118,8 @@
           <label class="opt-row"><input type="radio" name="hadir" value="Tidak"> Tidak, saya tidak bisa hadir</label>
         </fieldset>
 
-        <label for="r-saran"><span>Saran atau Masukan lainnya <span class="opt">(boleh dikosongkan)</span></span>
-          <textarea id="r-saran" name="saran" rows="3" maxlength="1000"></textarea>
+        <label for="r-saran"><span>Usul acara, saran, atau masukan <span class="opt">(boleh dikosongkan)</span></span>
+          <textarea id="r-saran" name="saran" rows="4" maxlength="1000" placeholder="Contoh: doorprize untuk semua yang hadir, lomba karaoke, menu makanan…"></textarea>
         </label>
 
         <button class="btn" type="submit">Kirim Konfirmasi</button>
@@ -126,47 +127,14 @@
       </form>
     </section>
 
-    <section id="ikut-serta" class="section">
-      <h2>Mau Ikut Meramaikan?</h2>
-      <p class="lead">Punya ide acara? Atau mau tampil di panggung? Pilih salah satu.</p>
+    <section id="isi-acara" class="section">
+      <h2>Jadi Pengisi Acara</h2>
+      <p class="lead">Mau tampil di panggung? Nyanyi, dance, komedi, MC, atau yang lain. Daftar di sini, panitia akan menghubungi lewat WhatsApp.</p>
 
-      <div class="choices" role="tablist" aria-label="Pilih jenis isian">
-        <button type="button" class="choice active" data-form="ide" role="tab" aria-selected="true">
-          <strong>Usul Acara</strong>
-          <span>Kasih ide: games, makanan, hadiah, dekorasi, dll.</span>
-        </button>
-        <button type="button" class="choice" data-form="tampil" role="tab" aria-selected="false">
-          <strong>Jadi Pengisi Acara</strong>
-          <span>Daftar untuk tampil: nyanyi, dance, komedi, MC, dll.</span>
-        </button>
-      </div>
-
-      <form id="form-ide" class="card" data-type="ide" data-success="Terima kasih! Usulanmu sudah terkirim.">
-        <label><span>Nama <span class="opt">(boleh dikosongkan)</span></span>
-          <input name="nama" autocomplete="name" maxlength="80">
-        </label>
-        <label>Kategori
-          <select name="kategori" required>
-            <option value="">Pilih…</option>
-            <option>Games / Permainan</option>
-            <option>Makanan &amp; Minuman</option>
-            <option>Hiburan / Pertunjukan</option>
-            <option>Dekorasi &amp; Tema</option>
-            <option>Hadiah / Doorprize</option>
-            <option>Lainnya</option>
-          </select>
-        </label>
-        <label>Apa yang perlu ada di acara?
-          <textarea name="ide" rows="4" required maxlength="1000" placeholder="Contoh: doorprize untuk semua yang hadir, lomba karaoke…"></textarea>
-        </label>
-        <button class="btn" type="submit">Kirim Usulan</button>
-        <p class="status" role="status"></p>
-      </form>
-
-      <form id="form-tampil" class="card" data-type="tampil" data-success="Terima kasih! Pendaftaranmu sebagai pengisi acara sudah terkirim." hidden>
+      <form id="form-tampil" class="card" data-type="tampil" data-success="Terima kasih! Pendaftaranmu sebagai pengisi acara sudah terkirim.">
         <label>Nama <input name="nama" required autocomplete="name" maxlength="80"></label>
         <label>Kontak (WhatsApp)
-          <input name="kontak" required inputmode="tel" autocomplete="tel" maxlength="30" placeholder="08xxxxxxxxxx">
+          <input name="kontak" type="tel" required inputmode="tel" autocomplete="tel" maxlength="30" placeholder="08xxxxxxxxxx">
         </label>
         <label>Jenis penampilan
           <select name="jenis" required>
