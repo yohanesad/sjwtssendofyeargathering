@@ -3,9 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>End of Year Gathering SJWTSS 2026</title>
-  <meta name="description" content="Hitung mundur menuju End of Year Gathering SJWTSS, 17 Desember 2026 di Sapa Cafe. Usul ide acara atau daftar jadi pengisi acara.">
+  <title>Undangan End of Year Gathering SJWTSS 2026</title>
+  <meta name="description" content="Kamu diundang! End of Year Gathering SJWTSS, Kamis 17 Desember 2026 di Sapa Cafe. Konfirmasi kehadiranmu sekarang.">
   <meta name="theme-color" content="#7a0a14">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kamu diundang! End of Year Gathering SJWTSS 2026">
+  <meta property="og:description" content="Kamis, 17 Desember 2026 · Sapa Cafe. Konfirmasi kehadiranmu di sini.">
+  <meta property="og:image" content="https://neon-pavlova-e0105d.netlify.app/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,19 +20,21 @@
   <header class="topbar">
     <a href="#top" class="brand">SJWTSS <span>2026</span></a>
     <nav>
+      <a href="#detail">Detail</a>
+      <a href="#konfirmasi">Konfirmasi</a>
       <a href="#galeri">Galeri</a>
-      <a href="#ikut-serta">Ikut Serta</a>
     </nav>
   </header>
 
   <main id="top">
     <section class="hero">
       <div class="hero-inner">
-        <p class="eyebrow">SJWTSS · <span data-bind="venue"></span></p>
-        <h1>End of Year Gathering<br>Segera Dimulai</h1>
+        <p class="eyebrow">Undangan · SJWTSS</p>
+        <p class="invited">Kamu Diundang!</p>
+        <h1>End of Year Gathering<br>SJWTSS 2026</h1>
         <p class="sub">
           <span data-bind="dateLabel"></span> · <span data-bind="timeLabel"></span><br>
-          Ayo bikin gathering tahun ini lebih seru dari tahun lalu.
+          <span data-bind="venue"></span>, <span data-bind="city"></span>
         </p>
 
         <div class="countdown" id="countdown" role="timer" aria-live="off">
@@ -39,23 +46,89 @@
         <p class="live-msg" id="live-msg" hidden></p>
 
         <div class="cta-row">
-          <a class="btn" href="#ikut-serta" data-open="ide">Usul Acara</a>
-          <a class="btn ghost" href="#ikut-serta" data-open="tampil">Jadi Pengisi Acara</a>
+          <a class="btn" href="#konfirmasi">Konfirmasi Kehadiran</a>
+          <a class="btn ghost" href="#detail">Detail &amp; Lokasi</a>
         </div>
+        <p class="rsvp-count" id="rsvp-count" hidden></p>
       </div>
     </section>
 
-    <section id="galeri" class="section">
-      <h2>Kenangan Gathering</h2>
-      <p class="lead">Foto-foto dari gathering tahun-tahun sebelumnya.</p>
-      <p class="lead" id="gallery-note" hidden>Contoh tampilan. Foto asli akan muncul setelah diunggah.</p>
-      <div class="tabs" id="year-tabs" role="tablist"></div>
-      <div class="grid" id="gallery"></div>
+    <section id="detail" class="section">
+      <h2>Detail Acara</h2>
+      <p class="lead">Catat tanggalnya, ajak rekan satu tim, dan sampai jumpa di sana.</p>
+
+      <div class="facts">
+        <div class="fact">
+          <small>Tanggal</small>
+          <strong data-bind="dateLabel"></strong>
+        </div>
+        <div class="fact">
+          <small>Waktu</small>
+          <strong><span data-bind="timeLabel"></span> – selesai</strong>
+        </div>
+        <div class="fact">
+          <small>Lokasi</small>
+          <strong><span data-bind="venue"></span>, <span data-bind="city"></span></strong>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe id="map" title="Peta lokasi acara" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+
+      <div class="cta-row left">
+        <a class="btn" id="btn-maps" href="#" target="_blank" rel="noopener">Buka di Google Maps</a>
+        <a class="btn ghost" id="btn-gcal" href="#" target="_blank" rel="noopener">Tambah ke Google Calendar</a>
+        <button class="btn ghost" id="btn-ics" type="button">Unduh file kalender (.ics)</button>
+        <button class="btn ghost" id="btn-share" type="button">Bagikan undangan</button>
+      </div>
+      <p class="status" id="share-status" role="status"></p>
     </section>
 
-    <section id="ikut-serta" class="section alt">
-      <h2>Ikut Serta</h2>
-      <p class="lead">Punya ide acara? Atau mau tampil? Isi salah satu form di bawah.</p>
+    <section id="konfirmasi" class="section alt">
+      <h2>Konfirmasi Kehadiran</h2>
+      <p class="lead">Isi data di bawah supaya panitia bisa menyiapkan tempat dan konsumsi. Kalau rencanamu berubah, isi lagi dengan NIK yang sama dan jawaban terakhirmu yang dipakai.</p>
+
+      <form id="form-rsvp" class="card" data-type="rsvp" data-success="Terima kasih! Konfirmasi kehadiranmu sudah tercatat.">
+        <label for="r-nama">Nama Lengkap
+          <input id="r-nama" name="nama" required autocomplete="name" maxlength="80">
+        </label>
+        <label for="r-nik">Nomor Induk Karyawan
+          <input id="r-nik" name="nik" required inputmode="text" autocomplete="off" maxlength="30">
+        </label>
+        <label for="r-dept">Departemen
+          <input id="r-dept" name="departemen" required maxlength="80">
+        </label>
+
+        <fieldset>
+          <legend>Pada Tanggal 17 Desember 2026, Jadwal Kerja Shift Saya</legend>
+          <label class="opt-row"><input type="radio" name="shift" value="Libur" required> Libur</label>
+          <label class="opt-row"><input type="radio" name="shift" value="Non-Shift (08:00 - 17:00 WIB atau 07:00 - 16:00 WIB)"> Non-Shift (08:00 - 17:00 WIB atau 07:00 - 16:00 WIB)</label>
+          <label class="opt-row"><input type="radio" name="shift" value="Shift 1 (08:00 - 16:00 WIB atau 07:00 - 15:00 WIB)"> Shift 1 (08:00 - 16:00 WIB atau 07:00 - 15:00 WIB)</label>
+          <label class="opt-row"><input type="radio" name="shift" value="Shift 2 (16:00 - 00:00 WIB atau 19:00 - 06:00 WIB)"> Shift 2 (16:00 - 00:00 WIB atau 19:00 - 06:00 WIB)</label>
+          <label class="opt-row"><input type="radio" name="shift" value="Shift 3 (00:00 - 08:00 WIB)"> Shift 3 (00:00 - 08:00 WIB)</label>
+          <label class="opt-row"><input type="radio" name="shift" value="Lainnya" id="shift-other"> Lainnya</label>
+          <input id="r-shift-lain" name="shift_lain" maxlength="80" placeholder="Tulis jadwal shift kamu" aria-label="Jadwal shift lainnya" hidden>
+        </fieldset>
+
+        <fieldset>
+          <legend>Konfirmasi Kehadiran</legend>
+          <label class="opt-row"><input type="radio" name="hadir" value="Ya" required> Ya, saya akan hadir</label>
+          <label class="opt-row"><input type="radio" name="hadir" value="Tidak"> Tidak, saya tidak bisa hadir</label>
+        </fieldset>
+
+        <label for="r-saran"><span>Saran atau Masukan lainnya <span class="opt">(boleh dikosongkan)</span></span>
+          <textarea id="r-saran" name="saran" rows="3" maxlength="1000"></textarea>
+        </label>
+
+        <button class="btn" type="submit">Kirim Konfirmasi</button>
+        <p class="status" role="status"></p>
+      </form>
+    </section>
+
+    <section id="ikut-serta" class="section">
+      <h2>Mau Ikut Meramaikan?</h2>
+      <p class="lead">Punya ide acara? Atau mau tampil di panggung? Pilih salah satu.</p>
 
       <div class="choices" role="tablist" aria-label="Pilih jenis isian">
         <button type="button" class="choice active" data-form="ide" role="tab" aria-selected="true">
@@ -68,7 +141,7 @@
         </button>
       </div>
 
-      <form id="form-ide" class="card" data-type="ide">
+      <form id="form-ide" class="card" data-type="ide" data-success="Terima kasih! Usulanmu sudah terkirim.">
         <label><span>Nama <span class="opt">(boleh dikosongkan)</span></span>
           <input name="nama" autocomplete="name" maxlength="80">
         </label>
@@ -90,7 +163,7 @@
         <p class="status" role="status"></p>
       </form>
 
-      <form id="form-tampil" class="card" data-type="tampil" hidden>
+      <form id="form-tampil" class="card" data-type="tampil" data-success="Terima kasih! Pendaftaranmu sebagai pengisi acara sudah terkirim." hidden>
         <label>Nama <input name="nama" required autocomplete="name" maxlength="80"></label>
         <label>Kontak (WhatsApp)
           <input name="kontak" required inputmode="tel" autocomplete="tel" maxlength="30" placeholder="08xxxxxxxxxx">
@@ -116,10 +189,18 @@
         <p class="status" role="status"></p>
       </form>
     </section>
+
+    <section id="galeri" class="section">
+      <h2>Kenangan Gathering</h2>
+      <p class="lead">Foto-foto dari gathering tahun-tahun sebelumnya.</p>
+      <p class="lead" id="gallery-note" hidden>Contoh tampilan. Foto asli akan muncul setelah diunggah.</p>
+      <div class="tabs" id="year-tabs" role="tablist"></div>
+      <div class="grid" id="gallery"></div>
+    </section>
   </main>
 
   <footer>
-    <p><span data-bind="eventName"></span> · <span data-bind="dateLabel"></span> · <span data-bind="venue"></span></p>
+    <p><span data-bind="eventName"></span> · <span data-bind="dateLabel"></span> · <span data-bind="venue"></span>, <span data-bind="city"></span></p>
   </footer>
 
   <div class="lightbox" id="lightbox" hidden>

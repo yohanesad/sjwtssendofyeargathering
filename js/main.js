@@ -101,6 +101,8 @@
       const status = $(".status", form), btn = $("button[type=submit]", form);
       const data = Object.fromEntries(new FormData(form));
       data.tipe = form.dataset.type;
+      if (data.shift === "Lainnya" && data.shift_lain) data.shift = "Lainnya: " + data.shift_lain;
+      delete data.shift_lain;
       data.waktu = new Date().toISOString();
       btn.disabled = true;
       status.className = "status"; status.textContent = "Mengirim…";
@@ -109,7 +111,7 @@
           const res = await fetch(cfg.formEndpoint, { method: "POST", body: new URLSearchParams(data) });
           const out = await res.json();
           if (!out.ok) throw new Error(out.error || "server menolak");
-          status.textContent = "Terima kasih! Masukanmu sudah terkirim.";
+          status.textContent = form.dataset.success || "Terima kasih! Masukanmu sudah terkirim.";
         } else {
           const key = "sjwtss-demo-submissions";
           const list = JSON.parse(localStorage.getItem(key) || "[]");
@@ -118,6 +120,7 @@
         }
         status.classList.add("ok");
         form.reset();
+        if (form.dataset.type === "rsvp") loadRsvpCount();
       } catch (err) {
         status.classList.add("err");
         console.error(err);
@@ -127,4 +130,71 @@
       }
     });
   });
+  // ---- Info acara: peta, kalender, bagikan ----
+  const start = new Date(cfg.eventStart), end = new Date(cfg.eventEnd);
+  const mapsQuery = encodeURIComponent(cfg.mapsQuery);
+  $("#map").src = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
+  $("#btn-maps").href = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+  const utc = d => d.toISOString().replace(/[-:]|\.\d{3}/g, "");
+  const title = `${cfg.eventName} 2026`;
+  const place = `${cfg.venue}, ${cfg.city}`;
+  $("#btn-gcal").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
+    action: "TEMPLATE", text: title, dates: `${utc(start)}/${utc(end)}`, location: place,
+    details: `Undangan ${title}. Konfirmasi kehadiran: ${location.href.split("#")[0]}`
+  });
+
+  $("#btn-ics").onclick = () => {
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//SJWTSS//Gathering 2026//ID", "BEGIN:VEVENT",
+      `UID:sjwtss-gathering-2026@${location.hostname || "local"}`,
+      `DTSTAMP:${utc(new Date())}`, `DTSTART:${utc(start)}`, `DTEND:${utc(end)}`,
+      `SUMMARY:${title}`, `LOCATION:${place}`,
+      `DESCRIPTION:Undangan ${title}`, "END:VEVENT", "END:VCALENDAR"
+    ].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+    a.download = "sjwtss-gathering-2026.ics";
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  $("#btn-share").onclick = async () => {
+    const url = location.href.split("#")[0];
+    const text = `Kamu diundang ke ${title}, ${cfg.dateLabel} di ${place}. Konfirmasi kehadiran di sini:`;
+    const note = $("#share-status");
+    try {
+      if (navigator.share) { await navigator.share({ title, text, url }); return; }
+      await navigator.clipboard.writeText(`${text} ${url}`);
+      note.textContent = "Teks undangan dan link sudah disalin. Tinggal tempel di grup.";
+    } catch (err) {
+      if (err && err.name === "AbortError") return;
+      note.textContent = "Salin link ini untuk dibagikan: " + url;
+    }
+  };
+
+  // ---- Form konfirmasi: kolom shift "Lainnya" dan jumlah yang sudah hadir ----
+  const shiftOther = $("#r-shift-lain");
+  document.querySelectorAll('#form-rsvp input[name="shift"]').forEach(r => {
+    r.addEventListener("change", () => {
+      const other = $("#shift-other").checked;
+      shiftOther.hidden = !other;
+      shiftOther.required = other;
+    });
+  });
+  $("#form-rsvp").addEventListener("reset", () => { shiftOther.hidden = true; shiftOther.required = false; });
+
+  function loadRsvpCount() {
+    if (!cfg.formEndpoint) return;
+    fetch(cfg.formEndpoint, { cache: "no-store" })
+      .then(r => r.json())
+      .then(d => {
+        if (!d || !d.ok || !(d.hadir > 0)) return;
+        const el = $("#rsvp-count");
+        el.textContent = `${d.hadir} rekan sudah konfirmasi hadir. Kamu kapan?`;
+        el.hidden = false;
+      })
+      .catch(() => {});
+  }
+  loadRsvpCount();
 })();
