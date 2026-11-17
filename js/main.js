@@ -129,7 +129,7 @@
   const place = `${cfg.venue}, ${cfg.city}`;
   $("#btn-gcal").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
     action: "TEMPLATE", text: title, dates: `${utc(start)}/${utc(end)}`, location: place,
-    details: `Undangan ${title}. Konfirmasi kehadiran: ${location.href.split("#")[0]}`
+    details: `Undangan ${title}. Dress code: ${cfg.dressCode}. Konfirmasi kehadiran: ${cfg.siteUrl || location.href.split("#")[0]}`
   });
 
   $("#btn-ics").onclick = () => {
@@ -138,7 +138,7 @@
       `UID:sjwtss-gathering-2026@${location.hostname || "local"}`,
       `DTSTAMP:${utc(new Date())}`, `DTSTART:${utc(start)}`, `DTEND:${utc(end)}`,
       `SUMMARY:${title}`, `LOCATION:${place}`,
-      `DESCRIPTION:Undangan ${title}`, "END:VEVENT", "END:VCALENDAR"
+      `DESCRIPTION:Undangan ${title}. Dress code: ${cfg.dressCode}`, "END:VEVENT", "END:VCALENDAR"
     ].join("\r\n");
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
@@ -148,8 +148,8 @@
   };
 
   $("#btn-share").onclick = async () => {
-    const url = location.href.split("#")[0];
-    const text = `Kamu diundang ke ${title}, ${cfg.dateLabel} di ${place}. Konfirmasi kehadiran di sini:`;
+    const url = cfg.siteUrl || location.href.split("#")[0];
+    const text = `Kamu diundang ke ${title}, ${cfg.dateLabel} pukul ${cfg.timeLabel} di ${place}. Dress code: ${cfg.dressCode}. Konfirmasi kehadiran di sini:`;
     const note = $("#share-status");
     try {
       if (navigator.share) { await navigator.share({ title, text, url }); return; }

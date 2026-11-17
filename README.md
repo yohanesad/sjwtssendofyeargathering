@@ -11,7 +11,7 @@ Lewat web GitHub: buka folder `assets/photos`, klik **Add file → Upload files*
 
 ## Pengaturan lain
 - **Jam acara** — `eventStart` dan `timeLabel` di `data/config.js`.
-- **Foto hero** — ganti `assets/hero.jpg`.
+- **Foto hero** — ganti `assets/hero.jpg`. **Poster** — ganti `assets/poster.jpg` (dan `assets/og.jpg` untuk pratinjau WhatsApp). Dress code dan penyelenggara ada di `data/config.js`.
 - **Lokasi/peta** — `venue`, `city`, `mapsQuery` di `data/config.js`. Jam selesai (`eventEnd`) dipakai untuk entri kalender.
 - **Form** — `formEndpoint` di `data/config.js` berisi URL Google Apps Script (`apps-script/Code.gs`). Konfirmasi kehadiran masuk ke tab "Konfirmasi Kehadiran" (satu baris per NIK), pendaftaran pengisi acara masuk ke tab pertama (usul acara sekarang ada di kolom saran pada form konfirmasi). Setelah mengubah `Code.gs`, buat versi baru di Deploy → Manage deployments.
 - **Pratinjau link di WhatsApp** — `og:image` di `index.html` memakai alamat Netlify lengkap. Jika nama situs diganti, perbarui alamat itu.
