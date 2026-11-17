@@ -99,6 +99,8 @@
           const res = await fetch(cfg.formEndpoint, { method: "POST", body: new URLSearchParams(data) });
           const out = await res.json();
           if (!out.ok) throw new Error(out.error || "server menolak");
+          // Skrip penerima versi lama menjawab ok tetapi tidak menyimpan kolom konfirmasi; jangan tampilkan sukses palsu.
+          if (form.dataset.type === "rsvp" && out.saved !== "rsvp") throw new Error("script-lama");
           status.textContent = form.dataset.success || "Terima kasih! Masukanmu sudah terkirim.";
         } else {
           const key = "sjwtss-demo-submissions";
@@ -112,7 +114,9 @@
       } catch (err) {
         status.classList.add("err");
         console.error(err);
-        status.textContent = "Gagal mengirim, data belum tersimpan. Coba lagi sebentar.";
+        status.textContent = err && err.message === "script-lama"
+          ? "Konfirmasi belum tersimpan: sistem penerima data belum diperbarui. Mohon hubungi panitia."
+          : "Gagal mengirim, data belum tersimpan. Coba lagi sebentar.";
       } finally {
         btn.disabled = false;
       }

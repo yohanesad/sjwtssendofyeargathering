@@ -75,12 +75,14 @@ function doPost(e) {
       }
       if (target > 0) sh.getRange(target, 1, 1, row.length).setValues([row]);
       else sh.appendRow(row);
+      return json_({ ok: true, saved: "rsvp" });
     } else {
       const sh = spreadsheet_().getSheets()[0];
       if (sh.getLastRow() === 0) sh.appendRow(OTHER_COLUMNS);
-      sh.appendRow(OTHER_COLUMNS.map(c => clean_(p[c])));
+      // Kolom terakhir menyimpan seluruh isian mentah, supaya tidak ada data yang hilang jika ada kolom baru.
+      sh.appendRow(OTHER_COLUMNS.map(c => clean_(p[c])).concat(clean_(JSON.stringify(p))));
     }
-    return json_({ ok: true });
+    return json_({ ok: true, saved: "other" });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
   } finally {
