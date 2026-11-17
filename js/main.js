@@ -91,6 +91,11 @@
       data.tipe = form.dataset.type;
       if (data.shift === "Lainnya" && data.shift_lain) data.shift = "Lainnya: " + data.shift_lain;
       delete data.shift_lain;
+      if (data.tipe === "rsvp") {
+        // Skrip penerima versi lama hanya mengenal kolom usulan/pengisi acara. Salin isian ke kolom itu juga
+        // supaya tidak ada yang hilang; skrip versi baru mengabaikannya dan memakai kolom aslinya.
+        Object.assign(data, { kontak: data.nik, kategori: data.departemen, jenis: data.shift, ide: data.saran, deskripsi: data.hadir });
+      }
       data.waktu = new Date().toISOString();
       btn.disabled = true;
       status.className = "status"; status.textContent = "Mengirim…";
@@ -99,8 +104,6 @@
           const res = await fetch(cfg.formEndpoint, { method: "POST", body: new URLSearchParams(data) });
           const out = await res.json();
           if (!out.ok) throw new Error(out.error || "server menolak");
-          // Skrip penerima versi lama menjawab ok tetapi tidak menyimpan kolom konfirmasi; jangan tampilkan sukses palsu.
-          if (form.dataset.type === "rsvp" && out.saved !== "rsvp") throw new Error("script-lama");
           status.textContent = form.dataset.success || "Terima kasih! Masukanmu sudah terkirim.";
         } else {
           const key = "sjwtss-demo-submissions";
@@ -114,9 +117,7 @@
       } catch (err) {
         status.classList.add("err");
         console.error(err);
-        status.textContent = err && err.message === "script-lama"
-          ? "Konfirmasi belum tersimpan: sistem penerima data belum diperbarui. Mohon hubungi panitia."
-          : "Gagal mengirim, data belum tersimpan. Coba lagi sebentar.";
+        status.textContent = "Gagal mengirim, data belum tersimpan. Coba lagi sebentar.";
       } finally {
         btn.disabled = false;
       }
