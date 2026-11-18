@@ -123,6 +123,8 @@
       }
     });
   });
+  $("#dress-img").onclick = () => openLightbox("assets/dresscode.jpg", "Contoh dress code");
+
   // ---- Info acara: peta, kalender, bagikan ----
   const start = new Date(cfg.eventStart), end = new Date(cfg.eventEnd);
   const mapsQuery = encodeURIComponent(cfg.mapsQuery);

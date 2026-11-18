@@ -172,3 +172,27 @@ footer .organizer{margin-top:8px}
   .hero-inner .organizer{max-width:320px;margin-left:auto;margin-right:auto}
 }
 @media (max-width:380px){.brand{font-size:.88rem}.topbar nav a{margin-left:9px;font-size:.78rem}}
+
+/* ---- Dress code & favicon ---- */
+a.dress{text-decoration:none;color:inherit}
+a.dress:hover{border-color:var(--cyan);box-shadow:inset 0 0 20px rgba(62,242,255,.16)}
+.dress .more{font-size:.78rem;font-weight:700;color:var(--cyan)}
+
+.dress-img{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);cursor:zoom-in;
+  box-shadow:0 0 30px rgba(255,43,214,.18)}
+.dress-img img{display:block;width:100%;height:auto}
+.dress-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.dress-notes>div{padding:18px 20px;border-radius:12px;background:rgba(27,11,64,.75);border:1px solid var(--line)}
+.dress-notes h3{margin:0 0 10px;font-family:var(--display);font-size:.8rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.dress-notes ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.styles li,.checks li{position:relative;padding-left:22px;font-size:.95rem}
+.styles li::before,.checks li::before{content:"";position:absolute;left:0;top:.5em;width:10px;height:10px;border-radius:2px;background:linear-gradient(135deg,var(--magenta),var(--cyan));transform:skewX(-10deg)}
+.swatches{grid-template-columns:repeat(5,1fr);gap:8px}
+.swatches li{display:grid;justify-items:center;gap:6px;font-size:.72rem;color:var(--muted);text-align:center}
+.swatches li::before{content:"";width:100%;max-width:44px;aspect-ratio:1;border-radius:50%;background:var(--c);box-shadow:0 0 14px var(--c)}
+@media (max-width:560px){.dress-img{border-radius:12px}.dress-notes>div{background:rgba(27,11,64,.94)}}
+@media (max-width:560px){
+  .dress-notes{gap:8px}
+  .dress-notes>div{padding:14px 16px}
+  .styles{grid-template-columns:1fr 1fr}
+}
